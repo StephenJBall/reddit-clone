@@ -67,7 +67,10 @@ function Header() {
           <div className="relative h-5 w-5 flex-shrink-0">
             <Image src="/images/reddit-icon-white.png" layout="fill" />
           </div>
-          <p className="text-gray-200">Sign Out</p>
+          <div>
+            <p className="truncate">{session?.user?.name}</p>
+          </div>
+          <ChevronDownIcon className="h-5 flex-shrink-0 text-gray"/>
         </div>
       ) : (
         <div
