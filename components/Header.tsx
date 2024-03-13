@@ -15,8 +15,10 @@ import {
   SpeakerWaveIcon,
   VideoCameraIcon,
 } from "@heroicons/react/24/outline";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 function Header() {
+  const { data: session } = useSession();
   return (
     <div className="sticky top-0 z-50 flex bg-black px-4 py-2 shadow-lg shadow-gray-500">
       <div className="relative h-10 w-20 flex-shrink-0 cursor-pointer">
@@ -57,12 +59,27 @@ function Header() {
       <div className="ml-5 flex items-center lg:hidden cursor-pointer">
         <Bars3Icon className="icon" />
       </div>
-      <div className="hidden lg:flex items-center space-x-2 border border-gray-100 p-2 cursor-pointer rounded-lg hover:bg-gray-900">
-        <div className="relative h-5 w-5 flex-shrink-0">
-          <Image src="/images/reddit-icon-white.png" layout="fill" />
+      {session ? (
+        <div
+          onClick={() => signOut()}
+          className="hidden lg:flex items-center space-x-2 border border-gray-100 p-2 cursor-pointer rounded-lg hover:bg-gray-900"
+        >
+          <div className="relative h-5 w-5 flex-shrink-0">
+            <Image src="/images/reddit-icon-white.png" layout="fill" />
+          </div>
+          <p className="text-gray-200">Sign Out</p>
         </div>
-        <p className="text-gray-200">Sign In</p>
-      </div>
+      ) : (
+        <div
+          onClick={() => signIn()}
+          className="hidden lg:flex items-center space-x-2 border border-gray-100 p-2 cursor-pointer rounded-lg hover:bg-gray-900"
+        >
+          <div className="relative h-5 w-5 flex-shrink-0">
+            <Image src="/images/reddit-icon-white.png" layout="fill" />
+          </div>
+          <p className="text-gray-200">Sign In</p>
+        </div>
+      )}
     </div>
   );
 }
