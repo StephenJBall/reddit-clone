@@ -22,8 +22,15 @@ function PostBox() {
     formState: { errors },
   } = useForm<FormData>();
 
+  const onSubmit = handleSubmit(async (formData) => {
+    console.log(formData);
+  });
+
   return (
-    <form className="sticky top-16 z-50 rounded-md border-gray-400 bg-gray p-2">
+    <form
+      onSubmit={onSubmit}
+      className="sticky top-16 z-50 rounded-md border-gray-400 bg-gray p-2"
+    >
       <div className="flex items-center space-x-3">
         <Avatar seed="stephen" />
         <input
@@ -59,7 +66,7 @@ function PostBox() {
             <p className="min-w-[90px]">Subreddit</p>
             <input
               className="m-2 flex-1 bg-blue-50 p-2 outline-none text-black rounded-md"
-              {...register("subreddit")}
+              {...register("subreddit", { required: true })}
               type="text"
               placeholder="The community you want to post it to..."
             />
@@ -76,7 +83,26 @@ function PostBox() {
                 />
               </div>
             )}
+            {/* Errors */}
+            {Object.keys(errors).length > 0 && (
+              <div className="space-y-2 p-2 text-red-400">
+                {errors.postTitle?.type == "required" && (
+                  <p>A Post Title is required</p>
+                )}
+                {errors.postTitle?.type == "required" && (
+                  <p>A Post Title is required</p>
+                )}
+              </div>
+            )}
           </div>
+          {!!watch("postTitle") && (
+            <button
+              type="submit"
+              className="w-full rounded-full bg-blue-400 text-white"
+            >
+              Create Post
+            </button>
+          )}
         </div>
       )}
     </form>

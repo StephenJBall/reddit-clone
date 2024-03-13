@@ -5,12 +5,12 @@ import PostBox from "@/components/PostBox";
 
 export default function Home() {
   return (
-    <div>
+    <div className="my-7 max-w-5xl mx-auto">
       <Head>
         <title>Reddit Clone</title>
       </Head>
       <PostBox />
-      <div className="">{/* Feed */}</div>
+      <div className="flex">{/* Feed */}</div>
     </div>
   );
 }
