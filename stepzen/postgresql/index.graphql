@@ -256,10 +256,8 @@ type Mutation {
   insertPost(
     body: String
     subreddit_id: ID
-    created_at: DateTime!
     title: String
     username: String
-    image: String
   ): Post
     @dbquery(
       type: "postgresql"
@@ -303,7 +301,7 @@ type Mutation {
       dml: DELETE
       configuration: "postgresql_config"
     )
-  insertSubreddit(topic: String, created_at: DateTime!): Subreddit
+  insertSubreddit(topic: String): Subreddit
     @dbquery(
       type: "postgresql"
       schema: "public"
@@ -325,6 +323,16 @@ type Mutation {
       """
       configuration: "postgresql_config"
     )
+
+    getSubredditByTopic(topic: String!) : Subreddit
+    @dbquery(
+      type: "postgresql"
+      query: """
+      select * from "subreddit" where "topic" = $1
+      """
+      configuration: "postgresql_config"
+    )
+
   " Mutations for type 'Vote' "
   deleteVote(id: ID!): Vote
     @dbquery(

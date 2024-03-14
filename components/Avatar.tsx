@@ -16,7 +16,8 @@ function Avatar({ seed, large }: Props) {
       }`}
     >
       <Image
-        layout="fill"
+      width={40}
+      height={20}
         alt="Avatar"
         src={
           `https://api.dicebear.com/7.x/pixel-art/svg/?seed=${seed || session?.user?.name
