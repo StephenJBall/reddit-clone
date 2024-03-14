@@ -43,8 +43,9 @@ function PostBox() {
         },
       });
 
-      const subredditExists = getSubredditListByTopic.length > 0;
-      if (!subredditExists) {
+      console.log(getSubredditListByTopic);
+
+      if (getSubredditListByTopic == null) {
         const {
           data: { insertSubreddit: newSubreddit },
         } = await addSubreddit({
@@ -70,6 +71,7 @@ function PostBox() {
 
         console.log("New Post added", newPost);
       } else {
+        console.log(getSubredditListByTopic.id);
         const image = formData.postImage || "";
         const {
           data: { insertPost: newPost },
@@ -77,7 +79,7 @@ function PostBox() {
           variables: {
             body: formData.postBody,
             image: image,
-            subreddit_id: getSubredditListByTopic[0].id,
+            subreddit_id: getSubredditListByTopic.id,
             title: formData.postTitle,
             username: session?.user?.name,
           },
