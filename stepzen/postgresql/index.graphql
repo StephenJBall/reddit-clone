@@ -160,11 +160,20 @@ type Query {
       """
       configuration: "postgresql_config"
     )
-     getSubredditListByTopic(topic: String!) : Subreddit
+  getSubredditListByTopic(topic: String!): Subreddit
     @dbquery(
       type: "postgresql"
       query: """
       select * from "subreddit" where "topic" = $1
+      """
+      configuration: "postgresql_config"
+    )
+
+  getSubredditListById(id: ID!): [Subreddit]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      select * from "subreddit" where "id" = $1
       """
       configuration: "postgresql_config"
     )
@@ -332,8 +341,6 @@ type Mutation {
       """
       configuration: "postgresql_config"
     )
-
-   
 
   " Mutations for type 'Vote' "
   deleteVote(id: ID!): Vote
