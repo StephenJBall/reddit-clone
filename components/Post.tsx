@@ -8,17 +8,15 @@ type Props = {
 
 function Post({ post }: Props) {
   return (
-    <div>
+    <div className="flex cursor-pointer rounded-md border-gray-300 bg-gray-700 shadow-sm hover:border hover:border-gray-600">
       <div className="flex flex-col items-center justify-start space-y-1 rounded-l-md p-4 text-gray-400">
         <ArrowUpIcon className="voteButtons text-white hover:text-blue-600" />
         <p className="text-white font-bold text-xs">0</p>
         <ArrowDownIcon className="voteButtons text-white hover:text-red-600" />
       </div>
-      <div>
+      <div className="p-3 pb-1">
         {/* Header */}
-        <div>
-            
-        </div>
+        <div></div>
         {/* Body */}
         {/* Image */}
         {/* Footer */}
