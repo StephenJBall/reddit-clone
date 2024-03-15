@@ -36,4 +36,7 @@ body {
   .icon {
     @apply h-9 lg:w-9 cursor-pointer rounded-sm lg:p-1 lg:hover:bg-gray-600;
   }
+  .voteButtons {
+    @apply h-6 w-6 hover:bg-gray-300 p-1 rounded-md;
+  }
 }
