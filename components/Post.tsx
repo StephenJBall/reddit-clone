@@ -43,7 +43,7 @@ function Post({ post }: Props) {
           <p className="mt-2 text-sm font-light">{post.body}</p>
         </div>
         {/* Image */}
-        <img src={post.image} className="width-full" />
+        <img src={post.image} className="width-full rounded-md" />
         {/* Footer */}
         <div className="flex space-x-4 text-gray-400">
           <div className="postButtons">
