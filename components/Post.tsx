@@ -1,4 +1,10 @@
-import { ArrowUpIcon } from "@heroicons/react/16/solid";
+import {
+  ArrowUpIcon,
+  BookmarkIcon,
+  GiftIcon,
+  ShareIcon,
+  EllipsisHorizontalIcon,
+} from "@heroicons/react/16/solid";
 import {
   ArrowDownIcon,
   ChatBubbleBottomCenterIcon,
@@ -43,6 +49,21 @@ function Post({ post }: Props) {
           <div className="postButtons">
             <ChatBubbleBottomCenterIcon className="h-6 w-6" />
             <p className="">{post.comment?.length}</p>
+          </div>
+          <div className="postButtons">
+            <GiftIcon className="h-6 w-6" />
+            <p className="hidden sm:inline">Award</p>
+          </div>
+          <div className="postButtons">
+            <ShareIcon className="h-6 w-6" />
+            <p className="hidden sm:inline">Share</p>
+          </div>
+          <div className="postButtons">
+            <BookmarkIcon className="h-6 w-6" />
+            <p className="hidden sm:inline">Save</p>
+          </div>
+          <div className="postButtons">
+            <EllipsisHorizontalIcon className="h-6 w-6" />
           </div>
         </div>
       </div>
