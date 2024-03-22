@@ -1,5 +1,8 @@
 import { ArrowUpIcon } from "@heroicons/react/16/solid";
-import { ArrowDownIcon } from "@heroicons/react/24/solid";
+import {
+  ArrowDownIcon,
+  ChatBubbleBottomCenterIcon,
+} from "@heroicons/react/24/solid";
 import React from "react";
 import Avatar from "./Avatar";
 import TimeAgo from "react-timeago";
@@ -29,8 +32,19 @@ function Post({ post }: Props) {
           </p>
         </div>
         {/* Body */}
+        <div className="py-4">
+          <h2 className="text-xl font-semibold">{post.title}</h2>
+          <p className="mt-2 text-sm font-light">{post.body}</p>
+        </div>
         {/* Image */}
+        <img src={post.image} className="width-full" />
         {/* Footer */}
+        <div className="flex space-x-4 text-gray-400">
+          <div className="postButtons">
+            <ChatBubbleBottomCenterIcon className="h-6 w-6" />
+            <p className="">{post.comment?.length}</p>
+          </div>
+        </div>
       </div>
     </div>
   );

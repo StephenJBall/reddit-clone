@@ -39,4 +39,7 @@ body {
   .voteButtons {
     @apply h-6 w-6 hover:bg-gray-300 p-1 rounded-md;
   }
+  .postButtons {
+    @apply flex items-center justify-center space-x-1 text-sm font-semibold p-2 hover:bg-gray-200 hover:rounded-md cursor-pointer;
+  }
 }
