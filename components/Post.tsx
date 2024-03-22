@@ -1,6 +1,8 @@
 import { ArrowUpIcon } from "@heroicons/react/16/solid";
 import { ArrowDownIcon } from "@heroicons/react/24/solid";
 import React from "react";
+import Avatar from "./Avatar";
+import TimeAgo from "react-timeago";
 
 type Props = {
   post: Post;
@@ -16,7 +18,16 @@ function Post({ post }: Props) {
       </div>
       <div className="p-3 pb-1">
         {/* Header */}
-        <div></div>
+        <div className="flex items-center space-x-2">
+          <Avatar seed={post.subreddit[0]?.topic} />
+          <p className="text-xs text-gray-400">
+            <span className="font-bold text-white hover:text-blue-400">
+              r/{post.subreddit.topic}
+            </span>{" "}
+            Posted by u/
+            {post.username} <TimeAgo date={post.created_at} />
+          </p>
+        </div>
         {/* Body */}
         {/* Image */}
         {/* Footer */}
