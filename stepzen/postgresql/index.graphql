@@ -112,6 +112,17 @@ type Query {
       """
       configuration: "postgresql_config"
     )
+  getPostListByTopic(topic: String!): [Post]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT *, "post"."id" AS "id" FROM "post"
+      JOIN "subreddit" ON "subreddit"."id" = "post"."subreddit_id"
+      WHERE "subreddit"."topic" = $1
+      ORDER BY "post"."created_at" DESC
+      """
+      configuration: "postgresql_config"
+    )
   postUsingPublic_post_subreddit_id_fkey(id: ID!): [Post]
     @dbquery(
       type: "postgresql"

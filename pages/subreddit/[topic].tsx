@@ -25,7 +25,7 @@ function Subreddit() {
       </div>
       <div>
         <PostBox subreddit={topic as string} />
-        <Feed />
+        <Feed topic={topic as string} />
       </div>
     </div>
   );
