@@ -16,7 +16,11 @@ type FormData = {
   subreddit: string;
 };
 
-function PostBox() {
+type Props = {
+  subreddit?: string;
+};
+
+function PostBox({ subreddit }: Props) {
   const { data: session } = useSession();
   const [imageBoxOpen, setImageBoxOpen] = useState(false);
   const [addPost] = useMutation(ADD_POST, {
@@ -41,7 +45,7 @@ function PostBox() {
       } = await client.query({
         query: GET_SUBREDDIT_BY_TOPIC,
         variables: {
-          topic: formData.subreddit,
+          topic: subreddit || formData.subreddit,
         },
       });
 
@@ -114,7 +118,11 @@ function PostBox() {
           className="bg-gray-50 p-2 pl-5 outline-none rounded-md flex-1 text-black"
           type="text"
           placeholder={
-            session ? "Create a post by entering a title!" : "Sign in to Post"
+            session
+              ? subreddit
+                ? `Create a post in r/${subreddit}`
+                : "Create a post by entering a title!"
+              : "Sign in to Post"
           }
         />
         <PhotoIcon
@@ -137,15 +145,17 @@ function PostBox() {
               placeholder="Text (Optional)"
             />
           </div>
-          <div className="flex items-center px-2">
-            <p className="min-w-[90px]">Subreddit</p>
-            <input
-              className="m-2 flex-1 bg-blue-50 p-2 outline-none text-black rounded-md"
-              {...register("subreddit", { required: true })}
-              type="text"
-              placeholder="The community you want to post it to..."
-            />
-          </div>
+          {!subreddit && (
+            <div className="flex items-center px-2">
+              <p className="min-w-[90px]">Subreddit</p>
+              <input
+                className="m-2 flex-1 bg-blue-50 p-2 outline-none text-black rounded-md"
+                {...register("subreddit", { required: true })}
+                type="text"
+                placeholder="The community you want to post it to..."
+              />
+            </div>
+          )}
           <div>
             {imageBoxOpen && (
               <div className="flex items-center px-2">
