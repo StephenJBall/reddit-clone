@@ -29,7 +29,7 @@ function PostPage() {
         <form className="flex flex-col space-y-2">
           <textarea
             disabled={!session}
-            className="h-24 rounded-md border border-gray-200 p-2 pl-4 outline-none diabled:bg-gray-50"
+            className="h-24 rounded-md border border-gray-200 p-2 pl-4 outline-none diabled:bg-gray-50 text-gray-600"
             placeholder={
               session ? "What are your thoughts?" : "Please sign in to comment"
             }
