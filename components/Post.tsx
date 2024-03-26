@@ -13,12 +13,23 @@ import React from "react";
 import Avatar from "./Avatar";
 import TimeAgo from "react-timeago";
 import Link from "next/link";
+import { jelly } from "ldrs";
+import { useQuery } from "@apollo/client";
+import { GET_POST_BY_POST_ID } from "@/graphql/queries";
+import PostPage from "@/pages/post/[postId]";
 
 type Props = {
   post: Post;
 };
 
 function Post({ post }: Props) {
+  if (!post)
+    return (
+      <div aria-live="polite">
+        <l-jelly size={50} color="#FF4501"></l-jelly>
+      </div>
+    );
+
   return (
     <Link href={`/post/${post.id}`}>
       <div className="flex cursor-pointer rounded-md border-gray-300 bg-gray-700 shadow-sm hover:border hover:border-gray-600">
