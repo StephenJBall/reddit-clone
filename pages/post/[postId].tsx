@@ -1,13 +1,23 @@
 import Post from "@/components/Post";
+import { ADD_COMMENT } from "@/graphql/mutations";
 import { GET_POST_BY_POST_ID } from "@/graphql/queries";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+
+type FormData = {
+  comment: string;
+};
 
 function PostPage() {
   const router = useRouter();
   const { data: session } = useSession();
+  const [addComment] = useMutation(ADD_COMMENT, {
+    refetchQueries: [GET_POST_BY_POST_ID, "getPostListByPostId"],
+  });
   const { data } = useQuery(GET_POST_BY_POST_ID, {
     variables: {
       post_id: router.query.postId,
@@ -15,6 +25,32 @@ function PostPage() {
   });
 
   const post: Post = data?.getPostListByPostId;
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    const notification = toast.loading("Posting your comment...");
+
+    await addComment({
+      variables: {
+        post_id: router.query.postId,
+        username: session?.user?.name,
+        text: data.comment,
+      },
+    });
+
+    setValue("comment", "");
+
+    toast.success("Comment Successfully Posted!", {
+      id: notification,
+    });
+  };
 
   return (
     <div className="mx-auto my-7 max-w-5xl">
@@ -26,8 +62,12 @@ function PostPage() {
             {session?.user?.name}
           </span>
         </p>
-        <form className="flex flex-col space-y-2">
+        <form
+          className="flex flex-col space-y-2"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <textarea
+            {...register("comment")}
             disabled={!session}
             className="h-24 rounded-md border border-gray-200 p-2 pl-4 outline-none diabled:bg-gray-50 text-gray-600"
             placeholder={

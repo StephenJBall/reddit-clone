@@ -76,6 +76,7 @@ type Query {
       """
       configuration: "postgresql_config"
     )
+
   " Queries for type 'Post' "
   post(id: ID!): Post
     @dbquery(
@@ -251,12 +252,7 @@ type Mutation {
       dml: DELETE
       configuration: "postgresql_config"
     )
-  insertComment(
-    username: String
-    post_id: ID
-    text: String
-    created_at: DateTime!
-  ): Comment
+  insertComment(username: String!, post_id: ID, text: String!): Comment
     @dbquery(
       type: "postgresql"
       schema: "public"
