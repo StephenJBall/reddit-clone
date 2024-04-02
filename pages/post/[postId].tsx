@@ -88,16 +88,22 @@ function PostPage() {
       <div className="-my-5 rounded-b-md border border-t-0 border-gray-500 bg-gray-500 py-5 px-10">
         <hr />
         {post.comment.map((comments) => (
-          <div key={comments.id}>
-            <hr />
-            <div>
+          <div
+            className="relative flex items-center space-x-2 space-y-5"
+            key={comments.id}
+          >
+            <hr className="absolute top-10 h-14 border left-7 z-0" />
+            <div className="z-50">
               <Avatar seed={comments.username} />
             </div>
-            <div>
-              <p>
-                <span>{comments.username}</span>
+            <div className="flex flex-col">
+              <p className="py-2 text-xs text-white px">
+                <span className="font-semibold text-white p-2">
+                  {comments.username}
+                </span>
                 <ReactTimeago date={comments.created_at} />
               </p>
+              <p>{comments.text}</p>
             </div>
           </div>
         ))}
