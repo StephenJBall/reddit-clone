@@ -1,3 +1,4 @@
+import Avatar from "@/components/Avatar";
 import Post from "@/components/Post";
 import { ADD_COMMENT } from "@/graphql/mutations";
 import { GET_POST_BY_POST_ID } from "@/graphql/queries";
@@ -7,6 +8,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import ReactTimeago from "react-timeago";
 
 type FormData = {
   comment: string;
@@ -25,6 +27,7 @@ function PostPage() {
   });
 
   const post: Post = data?.getPostListByPostId;
+  console.log(post);
 
   const {
     register,
@@ -81,6 +84,23 @@ function PostPage() {
             Comment
           </button>
         </form>
+      </div>
+      <div className="-my-5 rounded-b-md border border-t-0 border-gray-500 bg-gray-500 py-5 px-10">
+        <hr />
+        {post.comment.map((comments) => (
+          <div key={comments.id}>
+            <hr />
+            <div>
+              <Avatar seed={comments.username} />
+            </div>
+            <div>
+              <p>
+                <span>{comments.username}</span>
+                <ReactTimeago date={comments.created_at} />
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
