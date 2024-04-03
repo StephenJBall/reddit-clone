@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import ReactTimeago from "react-timeago";
 
+
 type FormData = {
   comment: string;
 };
@@ -26,8 +27,7 @@ function PostPage() {
     },
   });
 
-  const post: Post = data?.getPostListByPostId;
-  console.log(post);
+  const post: Post = data?.getPostListByPostId;  
 
   const {
     register,

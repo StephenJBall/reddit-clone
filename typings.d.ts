@@ -1,4 +1,4 @@
-type Comments = {
+export type Comment = {
   created_at: string;
   id: number;
   post_id: number;
@@ -6,7 +6,7 @@ type Comments = {
   username: string;
 };
 
-type Vote = {
+export type Vote = {
   created_at: string;
   id: number;
   post_id: number;
@@ -14,13 +14,13 @@ type Vote = {
   username: string;
 };
 
-type Subreddit = {
+export type Subreddit = {
   created_at: string;
   id: number;
   topic: string;
 };
 
-type Post = {
+export type Post = {
   body: string;
   created_at: string;
   id: number;
@@ -29,6 +29,6 @@ type Post = {
   title: string;
   username: string;
   votes: Vote[];
-  comments: Comments[];
+  comment: Comment[];
   subreddit: Subreddit[];
 };
