@@ -9,16 +9,20 @@ import {
   ArrowDownIcon,
   ChatBubbleBottomCenterIcon,
 } from "@heroicons/react/24/solid";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "./Avatar";
 import TimeAgo from "react-timeago";
 import Link from "next/link";
 import { jelly } from "ldrs";
-import { useQuery } from "@apollo/client";
-import { GET_POST_BY_POST_ID } from "@/graphql/queries";
+import { useMutation, useQuery } from "@apollo/client";
+import {
+  GET_ALL_VOTES_BY_POST_ID,
+  GET_POST_BY_POST_ID,
+} from "@/graphql/queries";
 import PostPage from "@/pages/post/[postId]";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import { ADD_VOTE } from "@/graphql/mutations";
 
 type Props = {
   post: Post;
@@ -28,12 +32,43 @@ function Post({ post }: Props) {
   const [vote, setVote] = useState<boolean>();
   const { data: session } = useSession();
 
+  const { data, loading } = useQuery(GET_ALL_VOTES_BY_POST_ID, {
+    variables: {
+      post_id: post?.id,
+    },
+  });
+
+  const [addVote] = useMutation(ADD_VOTE, {
+    refetchQueries: [ADD_VOTE, "getVotesByPostId"],
+  });
+
   const upVote = async (isUpvote: boolean) => {
     if (!session) {
       toast("You need to sign in to Vote!");
       return;
     }
+
+    if (vote && isUpvote) return;
+    if (vote === false && !isUpvote) return;
+
+    console.log("voting...", isUpvote);
+
+    await addVote({
+      variables: {
+        post_id: post.id,
+        username: session.user?.name,
+        upvote: isUpvote,
+      },
+    });
   };
+
+  useEffect(() => {
+    const votes: Vote[] = data?.getVotesByPostId;
+
+    const vote = votes?.find(
+      (vote) => vote.username == session?.user?.name
+    )?.upvote;
+  }, [data]);
 
   if (!post)
     return (
