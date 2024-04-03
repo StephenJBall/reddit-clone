@@ -211,6 +211,15 @@ type Query {
       table: "vote"
       configuration: "postgresql_config"
     )
+  getVotesByPostId(post_id: ID!): [Vote]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      SELECT * FROM "vote" WHERE "post_id" = $1
+      ORDER BY "created_at" DESC
+      """
+      configuration: "postgresql_config"
+    )
   voteList: [Vote]
     @dbquery(
       type: "postgresql"
@@ -372,12 +381,7 @@ type Mutation {
       dml: DELETE
       configuration: "postgresql_config"
     )
-  insertVote(
-    username: String
-    post_id: ID
-    created_at: DateTime!
-    upvote: Boolean
-  ): Vote
+  insertVote(username: String!, post_id: ID!, upvote: Boolean!): Vote
     @dbquery(
       type: "postgresql"
       schema: "public"

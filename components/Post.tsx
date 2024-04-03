@@ -9,7 +9,7 @@ import {
   ArrowDownIcon,
   ChatBubbleBottomCenterIcon,
 } from "@heroicons/react/24/solid";
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "./Avatar";
 import TimeAgo from "react-timeago";
 import Link from "next/link";
@@ -17,12 +17,24 @@ import { jelly } from "ldrs";
 import { useQuery } from "@apollo/client";
 import { GET_POST_BY_POST_ID } from "@/graphql/queries";
 import PostPage from "@/pages/post/[postId]";
+import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 type Props = {
   post: Post;
 };
 
 function Post({ post }: Props) {
+  const [vote, setVote] = useState<boolean>();
+  const { data: session } = useSession();
+
+  const upVote = async (isUpvote: boolean) => {
+    if (!session) {
+      toast("You need to sign in to Vote!");
+      return;
+    }
+  };
+
   if (!post)
     return (
       <div aria-live="polite">
@@ -34,9 +46,15 @@ function Post({ post }: Props) {
     <Link href={`/post/${post.id}`}>
       <div className="flex cursor-pointer rounded-md border-gray-300 bg-gray-700 shadow-sm hover:border hover:border-gray-600">
         <div className="flex flex-col items-center justify-start space-y-1 rounded-l-md p-4 text-gray-400">
-          <ArrowUpIcon className="voteButtons text-white hover:text-blue-600" />
+          <ArrowUpIcon
+            onClick={() => upVote(true)}
+            className="voteButtons text-white hover:text-blue-600"
+          />
           <p className="text-white font-bold text-xs">0</p>
-          <ArrowDownIcon className="voteButtons text-white hover:text-red-600" />
+          <ArrowDownIcon
+            onClick={() => upVote(false)}
+            className="voteButtons text-white hover:text-red-600"
+          />
         </div>
         <div className="p-3 pb-1">
           {/* Header */}
