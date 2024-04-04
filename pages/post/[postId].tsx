@@ -10,7 +10,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import ReactTimeago from "react-timeago";
 
-
 type FormData = {
   comment: string;
 };
@@ -21,13 +20,16 @@ function PostPage() {
   const [addComment] = useMutation(ADD_COMMENT, {
     refetchQueries: [GET_POST_BY_POST_ID, "getPostListByPostId"],
   });
+  
   const { data } = useQuery(GET_POST_BY_POST_ID, {
     variables: {
       post_id: router.query.postId,
     },
   });
 
-  const post: Post = data?.getPostListByPostId;  
+  console.log(data)
+  const post: Post = data?.getPostListByPostId;
+
 
   const {
     register,
@@ -87,23 +89,23 @@ function PostPage() {
       </div>
       <div className="-my-5 rounded-b-md border border-t-0 border-gray-500 bg-gray-500 py-5 px-10">
         <hr />
-        {post.comment.map((comments) => (
+        {post?.comments?.map((comment) => (
           <div
             className="relative flex items-center space-x-2 space-y-5"
-            key={comments.id}
+            key={comment.id}
           >
             <hr className="absolute top-10 h-14 border left-7 z-0" />
             <div className="z-50">
-              <Avatar seed={comments.username} />
+              <Avatar seed={comment.username} />
             </div>
             <div className="flex flex-col">
               <p className="py-2 text-xs text-white px">
                 <span className="font-semibold text-white p-2">
-                  {comments.username}
+                  {comment.username}
                 </span>
-                <ReactTimeago date={comments.created_at} />
+                <ReactTimeago date={comment.created_at} />
               </p>
-              <p>{comments.text}</p>
+              <p>{comment.text}</p>
             </div>
           </div>
         ))}
