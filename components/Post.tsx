@@ -120,7 +120,7 @@ function Post({ post }: Props) {
           <div className="flex space-x-4 text-gray-400">
             <div className="postButtons">
               <ChatBubbleBottomCenterIcon className="h-6 w-6" />
-              <p className="">{post?.comments?.length}</p>
+              <p className="">{post?.comment?.length}</p>
             </div>
             <div className="postButtons">
               <GiftIcon className="h-6 w-6" />
