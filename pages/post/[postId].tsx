@@ -27,7 +27,6 @@ function PostPage() {
     },
   });
 
-  console.log(data)
   const post: Post = data?.getPostListByPostId;
 
 

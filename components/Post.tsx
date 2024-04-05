@@ -68,6 +68,7 @@ function Post({ post }: Props) {
     const vote = votes?.find(
       (vote) => vote.username == session?.user?.name
     )?.upvote;
+    setVote(vote);
   }, [data]);
 
   if (!post)
@@ -83,16 +84,20 @@ function Post({ post }: Props) {
         <div className="flex flex-col items-center justify-start space-y-1 rounded-l-md p-4 text-gray-400">
           <ArrowUpIcon
             onClick={() => upVote(true)}
-            className={`voteButtons text-white hover:text-blue-600 ${
-              vote && "text-blue-400"
-            }`}
+            className={
+              vote
+                ? "voteButtons text-blue-400"
+                : "voteButtons text-white hover:text-blue-200"
+            }
           />
           <p className="text-white font-bold text-xs">0</p>
           <ArrowDownIcon
             onClick={() => upVote(false)}
-            className={`voteButtons text-white hover:text-red-600 ${
-              vote === false && "text-red-400"
-            }`}
+            className={
+              !vote
+                ? "voteButtons text-red-400"
+                : "voteButtons text-white hover:text-red-200"
+            }
           />
         </div>
         <div className="p-3 pb-1">
