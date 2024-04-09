@@ -39,7 +39,7 @@ function Post({ post }: Props) {
   });
 
   const [addVote] = useMutation(ADD_VOTE, {
-    refetchQueries: [ADD_VOTE, "getVotesByPostId"],
+    refetchQueries: [GET_ALL_VOTES_BY_POST_ID, "getVotesByPostId"],
   });
 
   const upVote = async (isUpvote: boolean) => {
@@ -48,8 +48,16 @@ function Post({ post }: Props) {
       return;
     }
 
-    if (vote && isUpvote) return;
-    if (vote === false && !isUpvote) return;
+    console.log(vote, isUpvote)
+
+    if (vote && isUpvote) {
+      console.log("True")
+      return;
+    }
+    if (vote === false && !isUpvote) {
+      console.log("False")
+      return;
+    }
 
     console.log("voting...", isUpvote);
 
@@ -94,7 +102,7 @@ function Post({ post }: Props) {
           <ArrowDownIcon
             onClick={() => upVote(false)}
             className={
-              !vote
+              vote === false
                 ? "voteButtons text-red-400"
                 : "voteButtons text-white hover:text-red-200"
             }
@@ -105,9 +113,9 @@ function Post({ post }: Props) {
           <div className="flex items-center space-x-2">
             <Avatar seed={post.subreddit[0]?.topic} />
             <p className="text-xs text-gray-400">
-              <Link href={`/subreddit/${post.subreddit?.topic}`}>
-                <span className="font-bold text-white hover:text-blue-400">
-                  r/{post.subreddit.topic}
+              <Link href={`/subreddit/${post.subreddit[0]?.topic}`}>
+                <span className="font-bold text-white hover:text-blue-400 px-2">
+                  r/{post.subreddit?.topic}
                 </span>
               </Link>
               Posted by u/
@@ -125,7 +133,7 @@ function Post({ post }: Props) {
           <div className="flex space-x-4 text-gray-400">
             <div className="postButtons">
               <ChatBubbleBottomCenterIcon className="h-6 w-6" />
-              <p className="">{post?.comment?.length}</p>
+              <p className="">{post?.comments?.length}</p>
             </div>
             <div className="postButtons">
               <GiftIcon className="h-6 w-6" />
