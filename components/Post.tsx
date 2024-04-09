@@ -48,16 +48,8 @@ function Post({ post }: Props) {
       return;
     }
 
-    console.log(vote, isUpvote)
-
-    if (vote && isUpvote) {
-      console.log("True")
-      return;
-    }
-    if (vote === false && !isUpvote) {
-      console.log("False")
-      return;
-    }
+    if (vote && isUpvote) return;
+    if (vote === false && !isUpvote) return;
 
     console.log("voting...", isUpvote);
 
@@ -79,6 +71,22 @@ function Post({ post }: Props) {
     setVote(vote);
   }, [data]);
 
+  const displayVotes = (data: any) => {
+    const votes: Vote[] = data?.getVotesByPostId;
+    const displayNumber = votes?.reduce(
+      (total, vote) => (vote.upvote ? (total += 1) : (total -= 1)),
+      0
+    );
+
+    if (votes.length === 0) return 0;
+
+    if (displayNumber === 0) {
+      return votes[0]?.upvote ? 1 : -1;
+    }
+
+    return displayNumber;
+  };
+
   if (!post)
     return (
       <div aria-live="polite">
@@ -98,7 +106,7 @@ function Post({ post }: Props) {
                 : "voteButtons text-white hover:text-blue-200"
             }
           />
-          <p className="text-white font-bold text-xs">0</p>
+          <p className="text-white font-bold text-xs">{displayVotes(data)}</p>
           <ArrowDownIcon
             onClick={() => upVote(false)}
             className={
