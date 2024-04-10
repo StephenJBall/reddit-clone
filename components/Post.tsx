@@ -95,7 +95,6 @@ function Post({ post }: Props) {
     );
 
   return (
-    <Link href={`/post/${post.id}`}>
       <div className="flex cursor-pointer rounded-md border-gray-300 bg-gray-700 shadow-sm hover:border hover:border-gray-600 mb-3">
         <div className="flex flex-col items-center justify-start space-y-1 rounded-l-md p-4 text-gray-400">
           <ArrowUpIcon
@@ -131,10 +130,12 @@ function Post({ post }: Props) {
             </p>
           </div>
           {/* Body */}
+          <Link href={`/post/${post.id}`}>
           <div className="py-4">
             <h2 className="text-xl font-semibold">{post.title}</h2>
             <p className="mt-2 text-sm font-light">{post.body}</p>
           </div>
+          </Link>
           {/* Image */}
           <img src={post.image} className="width-full rounded-md" />
           {/* Footer */}
@@ -161,7 +162,6 @@ function Post({ post }: Props) {
           </div>
         </div>
       </div>
-    </Link>
   );
 }
 
