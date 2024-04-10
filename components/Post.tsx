@@ -38,6 +38,15 @@ function Post({ post }: Props) {
     },
   });
 
+  useEffect(() => {
+    const votes: Vote[] = data?.getVotesByPostId;
+
+    const vote = votes?.find(
+      (vote) => vote.username == session?.user?.name
+    )?.upvote;
+    setVote(vote);
+  }, [data]);
+
   const [addVote] = useMutation(ADD_VOTE, {
     refetchQueries: [GET_ALL_VOTES_BY_POST_ID, "getVotesByPostId"],
   });
@@ -59,18 +68,9 @@ function Post({ post }: Props) {
         username: session.user?.name,
         upvote: isUpvote,
       },
-    });
+    });  
   };
-
-  useEffect(() => {
-    const votes: Vote[] = data?.getVotesByPostId;
-
-    const vote = votes?.find(
-      (vote) => vote.username == session?.user?.name
-    )?.upvote;
-    setVote(vote);
-  }, [data]);
-
+  
   const displayVotes = (data: any) => {
     const votes: Vote[] = data?.getVotesByPostId;
     const displayNumber = votes?.reduce(
