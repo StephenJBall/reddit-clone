@@ -110,7 +110,7 @@ function PostBox({ subreddit }: Props) {
       onSubmit={onSubmit}
       className="sticky top-16 z-50 rounded-md border-gray-400 bg-gray p-2"
     >
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-10">
         <Avatar seed="stephen" />
         <input
           {...register("postTitle", { required: true })}

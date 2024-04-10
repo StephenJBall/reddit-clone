@@ -78,7 +78,7 @@ function Post({ post }: Props) {
       0
     );
 
-    if (votes.length === 0) return 0;
+    if (votes?.length === 0) return 0;
 
     if (displayNumber === 0) {
       return votes[0]?.upvote ? 1 : -1;
@@ -96,7 +96,7 @@ function Post({ post }: Props) {
 
   return (
     <Link href={`/post/${post.id}`}>
-      <div className="flex cursor-pointer rounded-md border-gray-300 bg-gray-700 shadow-sm hover:border hover:border-gray-600">
+      <div className="flex cursor-pointer rounded-md border-gray-300 bg-gray-700 shadow-sm hover:border hover:border-gray-600 mb-3">
         <div className="flex flex-col items-center justify-start space-y-1 rounded-l-md p-4 text-gray-400">
           <ArrowUpIcon
             onClick={() => upVote(true)}
@@ -116,7 +116,7 @@ function Post({ post }: Props) {
             }
           />
         </div>
-        <div className="p-3 pb-1">
+        <div className="p-3 pb-1 pl-16">
           {/* Header */}
           <div className="flex items-center space-x-2">
             <Avatar seed={post.subreddit[0]?.topic} />
