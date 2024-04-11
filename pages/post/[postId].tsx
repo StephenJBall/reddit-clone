@@ -20,7 +20,7 @@ function PostPage() {
   const [addComment] = useMutation(ADD_COMMENT, {
     refetchQueries: [GET_POST_BY_POST_ID, "getPostListByPostId"],
   });
-  
+
   const { data } = useQuery(GET_POST_BY_POST_ID, {
     variables: {
       post_id: router.query.postId,
@@ -28,7 +28,6 @@ function PostPage() {
   });
 
   const post: Post = data?.getPostListByPostId;
-
 
   const {
     register,
@@ -79,6 +78,7 @@ function PostPage() {
             }
           />
           <button
+            disabled={!session}
             type="submit"
             className="rounded-full bg-red-400 p-3 font-semibold text-white diabled:bg-gray-200 hover:bg-red-500"
           >
