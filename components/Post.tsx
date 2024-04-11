@@ -115,7 +115,7 @@ function Post({ post }: Props) {
             }
           />
         </div>
-        <div className="p-3 pb-1 pl-16">
+        <div className="p-3 pb-1">
           {/* Header */}
           <div className="flex items-center space-x-2">
             <Avatar seed={post.subreddit[0]?.topic} />
